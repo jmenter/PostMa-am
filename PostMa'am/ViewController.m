@@ -10,10 +10,13 @@
 @property (weak) IBOutlet NSTextField *addressTextField;
 @property (weak) IBOutlet NSButton *goButton;
 @property (nonatomic) NSMutableDictionary <NSString *, NSString *> *requestHeaders;
+@property (weak) IBOutlet NSTextField *bodyTextField;
+@property (weak) IBOutlet NSButton *includeBodyCheckbox;
 @property (weak) IBOutlet NSTableView *requestHeadersTableView;
 
 #pragma mark - Response
 @property (weak) IBOutlet NSTextField *responseLabel;
+@property (weak) IBOutlet NSTextField *responseStatusLabel;
 @property (weak) IBOutlet NSTableView *responseHeadersTableView;
 @property (weak) IBOutlet NSTextField *responseRawTextField;
 @property (weak) IBOutlet WKWebView *responseWebView;
@@ -34,8 +37,13 @@
         self.addressTextField.stringValue = urlString;
     }
 
+    NSData *body;
+    if (self.includeBodyCheckbox.state == NSControlStateValueOn) {
+        body = [self.bodyTextField.stringValue dataUsingEncoding:NSUTF8StringEncoding];
+    }
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]
                                               httpMethod:self.methodPopUp.titleOfSelectedItem
+                                                httpBody:body
                                                  headers:self.requestHeaders];
 
     [[NSURLSession.sharedSession dataTaskWithRequest:request
@@ -50,6 +58,7 @@
 {
     self.response = nil;
     self.responseData = nil;
+    self.responseStatusLabel.stringValue = [NSString stringWithFormat:@"Status: Error (%li, %@)", error.code, error.localizedDescription];
     // TODO: handle error
 }
 
@@ -57,7 +66,7 @@
 {
     self.response = response;
     self.responseData = data;
-
+    self.responseStatusLabel.stringValue = [NSString stringWithFormat:@"Status: %li", self.response.statusCode];
     self.responseRawTextField.stringValue = [self.responseData stringWithEncoding:self.response.stringEncoding];
     [self.responseWebView loadHTMLString:self.responseRawTextField.stringValue
                                  baseURL:self.response.URL.baseURL];
@@ -74,6 +83,11 @@
 }
 
 #pragma mark - IBActions
+
+- (IBAction)includeBodyAction:(NSButton *)sender;
+{
+    self.bodyTextField.enabled = sender.state;
+}
 
 - (IBAction)goButtonAction:(NSButton *)sender;
 {

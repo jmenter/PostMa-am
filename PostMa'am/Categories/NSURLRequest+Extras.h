@@ -9,6 +9,7 @@
 
 + (instancetype)requestWithURL:(NSURL *)url
                     httpMethod:(NSString *)method
+                      httpBody:(NSData *)body
                        headers:(NSDictionary <NSString *, NSString*> *)headers;
 
 @end

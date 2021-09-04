@@ -6,7 +6,7 @@
 - (void)windowDidLoad {
     [super windowDidLoad];
     if (!self.window.zoomed) {
-        [self.window zoom:self];
+        [self.window performZoom:self];
     }
 }
 
