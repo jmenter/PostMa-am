@@ -12,6 +12,7 @@
 @property (nonatomic) NSMutableDictionary <NSString *, NSString *> *requestHeaders;
 @property (weak) IBOutlet NSTextField *bodyTextField;
 @property (weak) IBOutlet NSButton *includeBodyCheckbox;
+@property (weak) IBOutlet NSPopUpButton *bodyEncodingPopUp;
 @property (weak) IBOutlet NSTableView *requestHeadersTableView;
 
 #pragma mark - Response
@@ -86,7 +87,8 @@
 
 - (IBAction)includeBodyAction:(NSButton *)sender;
 {
-    self.bodyTextField.enabled = sender.state;
+    self.bodyTextField.enabled =
+    self.bodyEncodingPopUp.enabled = sender.state;
 }
 
 - (IBAction)goButtonAction:(NSButton *)sender;

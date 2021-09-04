@@ -888,10 +888,32 @@
                                                         <rect key="frame" x="0.0" y="234" width="455" height="434"/>
                                                         <autoresizingMask key="autoresizingMask"/>
                                                         <subviews>
-                                                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PUa-2h-8jv">
-                                                                <rect key="frame" x="18" y="398" width="104" height="18"/>
+                                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EXh-Za-91G">
+                                                                <rect key="frame" x="20" y="20" width="415" height="365"/>
+                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                <textFieldCell key="cell" selectable="YES" editable="YES" enabled="NO" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="SF2-JU-GjU">
+                                                                    <font key="font" metaFont="system"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HWQ-WI-H35">
+                                                                <rect key="frame" x="126" y="390" width="77" height="25"/>
                                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                                <buttonCell key="cell" type="check" title="Include body:" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="sph-4T-zeJ">
+                                                                <popUpButtonCell key="cell" type="push" title="UTF-8" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" enabled="NO" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="VvV-6V-lMu" id="OZJ-OX-3eJ">
+                                                                    <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                                                    <font key="font" metaFont="menu"/>
+                                                                    <menu key="menu" id="3yP-Vm-80y">
+                                                                        <items>
+                                                                            <menuItem title="UTF-8" state="on" id="VvV-6V-lMu"/>
+                                                                        </items>
+                                                                    </menu>
+                                                                </popUpButtonCell>
+                                                            </popUpButton>
+                                                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="PUa-2h-8jv">
+                                                                <rect key="frame" x="18" y="395" width="104" height="18"/>
+                                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                                <buttonCell key="cell" type="check" title="Include body:" bezelStyle="regularSquare" imagePosition="left" inset="2" id="sph-4T-zeJ">
                                                                     <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                     <font key="font" metaFont="system"/>
                                                                 </buttonCell>
@@ -899,15 +921,6 @@
                                                                     <action selector="includeBodyAction:" target="XfG-lQ-9wD" id="FWy-wp-glb"/>
                                                                 </connections>
                                                             </button>
-                                                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EXh-Za-91G">
-                                                                <rect key="frame" x="20" y="20" width="415" height="372"/>
-                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                                <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="SF2-JU-GjU">
-                                                                    <font key="font" metaFont="system"/>
-                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                </textFieldCell>
-                                                            </textField>
                                                         </subviews>
                                                     </customView>
                                                 </subviews>
@@ -1091,12 +1104,6 @@
                                                                             </subviews>
                                                                         </view>
                                                                     </tabViewItem>
-                                                                    <tabViewItem label="JSON" identifier="" id="N7O-mQ-DsM">
-                                                                        <view key="view" id="z1o-uI-m3J">
-                                                                            <rect key="frame" x="10" y="33" width="404" height="215"/>
-                                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                                        </view>
-                                                                    </tabViewItem>
                                                                 </tabViewItems>
                                                             </tabView>
                                                         </subviews>
@@ -1119,6 +1126,7 @@
                     </view>
                     <connections>
                         <outlet property="addressTextField" destination="RZs-H3-xlK" id="7y6-SN-wkq"/>
+                        <outlet property="bodyEncodingPopUp" destination="HWQ-WI-H35" id="ClR-FM-bMj"/>
                         <outlet property="bodyTextField" destination="EXh-Za-91G" id="I0u-YG-9sv"/>
                         <outlet property="goButton" destination="b7V-D4-7Hn" id="8IM-ZJ-qk8"/>
                         <outlet property="includeBodyCheckbox" destination="PUa-2h-8jv" id="Ysu-lJ-QqA"/>
