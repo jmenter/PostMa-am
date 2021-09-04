@@ -10,7 +10,7 @@
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = method;
     request.allHTTPHeaderFields = headers;
-    return  request.copy;
+    return request.copy;
 }
 
 @end
