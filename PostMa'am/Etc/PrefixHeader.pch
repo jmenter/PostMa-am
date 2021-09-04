@@ -5,5 +5,6 @@
 #import "NSHTTPURLResponse+Extras.h"
 #import "NSString+Extras.h"
 #import "NSURLRequest+Extras.h"
+#import "NSData+Extras.h"
 
 #endif /* PrefixHeader_pch */

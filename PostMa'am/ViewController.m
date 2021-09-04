@@ -13,11 +13,14 @@
 @property (weak) IBOutlet NSTableView *requestHeadersTableView;
 
 #pragma mark - Response
-@property (nonatomic) NSHTTPURLResponse *response;
 @property (weak) IBOutlet NSTextField *responseLabel;
 @property (weak) IBOutlet NSTableView *responseHeadersTableView;
 @property (weak) IBOutlet NSTextField *responseRawTextField;
 @property (weak) IBOutlet WKWebView *responseWebView;
+
+// Keep the response and data for display purposes.
+@property (nonatomic) NSHTTPURLResponse *response;
+@property (nonatomic) NSData *responseData;
 
 @end
 
@@ -46,13 +49,18 @@
 - (void)handleError:(NSError *)error;
 {
     self.response = nil;
+    self.responseData = nil;
+    // TODO: handle error
 }
 
 - (void)handleResponse:(NSHTTPURLResponse *)response data:(NSData *)data;
 {
     self.response = response;
-    self.responseRawTextField.stringValue = [NSString.alloc initWithData:data encoding:self.response.stringEncoding];
-    [self.responseWebView loadHTMLString:self.responseRawTextField.stringValue baseURL:self.response.URL.baseURL];
+    self.responseData = data;
+
+    self.responseRawTextField.stringValue = [self.responseData stringWithEncoding:self.response.stringEncoding];
+    [self.responseWebView loadHTMLString:self.responseRawTextField.stringValue
+                                 baseURL:self.response.URL.baseURL];
     [self.responseHeadersTableView reloadData];
 }
 
@@ -86,24 +94,20 @@
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row;
 {
-    NSTableCellView *view;
-    if (tableView == self.requestHeadersTableView) {
-        if ([tableColumn.identifier isEqualToString:@"requestHeader"]) {
-            view = [tableView makeViewWithIdentifier:@"requestHeaderCell" owner:self];
-            view.textField.stringValue = self.requestHeaders.allKeys[row];
-        } else if ([tableColumn.identifier isEqualToString:@"requestValue"]) {
-            view = [tableView makeViewWithIdentifier:@"requestValueCell" owner:self];
-            view.textField.stringValue = self.requestHeaders.allValues[row];
-        }
-    } else if (tableView == self.responseHeadersTableView) {
-        if ([tableColumn.identifier isEqualToString:@"responseHeader"]) {
-            view = [tableView makeViewWithIdentifier:@"responseHeaderCell" owner:self];
-            view.textField.stringValue = self.response.allHeaderFields.allKeys[row];
-
-        } else if ([tableColumn.identifier isEqualToString:@"responseValue"]) {
-            view = [tableView makeViewWithIdentifier:@"responseValueCell" owner:self];
-            view.textField.stringValue = self.response.allHeaderFields.allValues[row];
-        }
+    NSString *cellIdentifier = [tableColumn.identifier stringByAppendingString:@"Cell"];
+    NSTableCellView *view = [tableView makeViewWithIdentifier:cellIdentifier owner:self];
+    
+    // request
+    if ([tableColumn.identifier isEqualToString:@"requestHeader"]) {
+        view.textField.stringValue = self.requestHeaders.allKeys[row];
+    } else if ([tableColumn.identifier isEqualToString:@"requestValue"]) {
+        view.textField.stringValue = self.requestHeaders.allValues[row];
+    }
+    // response
+    else if ([tableColumn.identifier isEqualToString:@"responseHeader"]) {
+        view.textField.stringValue = self.response.allHeaderFields.allKeys[row];
+    } else if ([tableColumn.identifier isEqualToString:@"responseValue"]) {
+        view.textField.stringValue = self.response.allHeaderFields.allValues[row];
     }
     return view;
 }

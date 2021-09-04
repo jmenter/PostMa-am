@@ -15,6 +15,8 @@
 		631F850026E3ABE0007B87BC /* NSHTTPURLResponse+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = 631F84FF26E3ABE0007B87BC /* NSHTTPURLResponse+Extras.m */; };
 		631F850E26E3AF26007B87BC /* NSString+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = 631F850D26E3AF26007B87BC /* NSString+Extras.m */; };
 		631F851226E3AFC1007B87BC /* NSURLRequest+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = 631F851126E3AFC1007B87BC /* NSURLRequest+Extras.m */; };
+		631F851626E3BA73007B87BC /* NSData+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = 631F851526E3BA73007B87BC /* NSData+Extras.m */; };
+		631F851F26E3C140007B87BC /* WindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 631F851E26E3C140007B87BC /* WindowController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +37,10 @@
 		631F850D26E3AF26007B87BC /* NSString+Extras.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extras.m"; sourceTree = "<group>"; };
 		631F851026E3AFC1007B87BC /* NSURLRequest+Extras.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSURLRequest+Extras.h"; sourceTree = "<group>"; };
 		631F851126E3AFC1007B87BC /* NSURLRequest+Extras.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSURLRequest+Extras.m"; sourceTree = "<group>"; };
+		631F851426E3BA73007B87BC /* NSData+Extras.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSData+Extras.h"; sourceTree = "<group>"; };
+		631F851526E3BA73007B87BC /* NSData+Extras.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSData+Extras.m"; sourceTree = "<group>"; };
+		631F851D26E3C140007B87BC /* WindowController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WindowController.h; sourceTree = "<group>"; };
+		631F851E26E3C140007B87BC /* WindowController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = WindowController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +79,8 @@
 				6306C40C26E2A3BB003D84E2 /* AppDelegate.m */,
 				6306C40E26E2A3BB003D84E2 /* ViewController.h */,
 				6306C40F26E2A3BB003D84E2 /* ViewController.m */,
+				631F851D26E3C140007B87BC /* WindowController.h */,
+				631F851E26E3C140007B87BC /* WindowController.m */,
 				6306C41126E2A3BC003D84E2 /* Assets.xcassets */,
 				6306C41326E2A3BC003D84E2 /* Main.storyboard */,
 			);
@@ -99,6 +107,8 @@
 				631F850D26E3AF26007B87BC /* NSString+Extras.m */,
 				631F851026E3AFC1007B87BC /* NSURLRequest+Extras.h */,
 				631F851126E3AFC1007B87BC /* NSURLRequest+Extras.m */,
+				631F851426E3BA73007B87BC /* NSData+Extras.h */,
+				631F851526E3BA73007B87BC /* NSData+Extras.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -172,11 +182,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				6306C41026E2A3BB003D84E2 /* ViewController.m in Sources */,
+				631F851F26E3C140007B87BC /* WindowController.m in Sources */,
 				631F850E26E3AF26007B87BC /* NSString+Extras.m in Sources */,
 				6306C41826E2A3BC003D84E2 /* main.m in Sources */,
 				631F851226E3AFC1007B87BC /* NSURLRequest+Extras.m in Sources */,
 				631F850026E3ABE0007B87BC /* NSHTTPURLResponse+Extras.m in Sources */,
 				6306C40D26E2A3BB003D84E2 /* AppDelegate.m in Sources */,
+				631F851626E3BA73007B87BC /* NSData+Extras.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
