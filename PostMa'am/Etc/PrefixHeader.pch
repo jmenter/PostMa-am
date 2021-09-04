@@ -1,0 +1,9 @@
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+#import "NSHTTPURLResponse+Extras.h"
+#import "NSString+Extras.h"
+#import "NSURLRequest+Extras.h"
+
+#endif /* PrefixHeader_pch */

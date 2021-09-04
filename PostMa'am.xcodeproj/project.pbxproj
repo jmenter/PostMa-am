@@ -12,6 +12,9 @@
 		6306C41226E2A3BC003D84E2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6306C41126E2A3BC003D84E2 /* Assets.xcassets */; };
 		6306C41526E2A3BC003D84E2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6306C41326E2A3BC003D84E2 /* Main.storyboard */; };
 		6306C41826E2A3BC003D84E2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6306C41726E2A3BC003D84E2 /* main.m */; };
+		631F850026E3ABE0007B87BC /* NSHTTPURLResponse+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = 631F84FF26E3ABE0007B87BC /* NSHTTPURLResponse+Extras.m */; };
+		631F850E26E3AF26007B87BC /* NSString+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = 631F850D26E3AF26007B87BC /* NSString+Extras.m */; };
+		631F851226E3AFC1007B87BC /* NSURLRequest+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = 631F851126E3AFC1007B87BC /* NSURLRequest+Extras.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +28,13 @@
 		6306C41626E2A3BC003D84E2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6306C41726E2A3BC003D84E2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		6306C41926E2A3BC003D84E2 /* PostMa_am.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PostMa_am.entitlements; sourceTree = "<group>"; };
+		631F84FE26E3ABE0007B87BC /* NSHTTPURLResponse+Extras.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSHTTPURLResponse+Extras.h"; sourceTree = "<group>"; };
+		631F84FF26E3ABE0007B87BC /* NSHTTPURLResponse+Extras.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSHTTPURLResponse+Extras.m"; sourceTree = "<group>"; };
+		631F850226E3AD15007B87BC /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		631F850C26E3AF26007B87BC /* NSString+Extras.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSString+Extras.h"; sourceTree = "<group>"; };
+		631F850D26E3AF26007B87BC /* NSString+Extras.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extras.m"; sourceTree = "<group>"; };
+		631F851026E3AFC1007B87BC /* NSURLRequest+Extras.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSURLRequest+Extras.h"; sourceTree = "<group>"; };
+		631F851126E3AFC1007B87BC /* NSURLRequest+Extras.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSURLRequest+Extras.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,17 +67,40 @@
 		6306C40A26E2A3BB003D84E2 /* PostMa'am */ = {
 			isa = PBXGroup;
 			children = (
+				631F850726E3AE90007B87BC /* Categories */,
+				631F850626E3AE7B007B87BC /* Etc */,
 				6306C40B26E2A3BB003D84E2 /* AppDelegate.h */,
 				6306C40C26E2A3BB003D84E2 /* AppDelegate.m */,
 				6306C40E26E2A3BB003D84E2 /* ViewController.h */,
 				6306C40F26E2A3BB003D84E2 /* ViewController.m */,
 				6306C41126E2A3BC003D84E2 /* Assets.xcassets */,
 				6306C41326E2A3BC003D84E2 /* Main.storyboard */,
-				6306C41626E2A3BC003D84E2 /* Info.plist */,
-				6306C41726E2A3BC003D84E2 /* main.m */,
-				6306C41926E2A3BC003D84E2 /* PostMa_am.entitlements */,
 			);
 			path = "PostMa'am";
+			sourceTree = "<group>";
+		};
+		631F850626E3AE7B007B87BC /* Etc */ = {
+			isa = PBXGroup;
+			children = (
+				6306C41626E2A3BC003D84E2 /* Info.plist */,
+				6306C41726E2A3BC003D84E2 /* main.m */,
+				631F850226E3AD15007B87BC /* PrefixHeader.pch */,
+				6306C41926E2A3BC003D84E2 /* PostMa_am.entitlements */,
+			);
+			path = Etc;
+			sourceTree = "<group>";
+		};
+		631F850726E3AE90007B87BC /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				631F84FE26E3ABE0007B87BC /* NSHTTPURLResponse+Extras.h */,
+				631F84FF26E3ABE0007B87BC /* NSHTTPURLResponse+Extras.m */,
+				631F850C26E3AF26007B87BC /* NSString+Extras.h */,
+				631F850D26E3AF26007B87BC /* NSString+Extras.m */,
+				631F851026E3AFC1007B87BC /* NSURLRequest+Extras.h */,
+				631F851126E3AFC1007B87BC /* NSURLRequest+Extras.m */,
+			);
+			path = Categories;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -139,7 +172,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				6306C41026E2A3BB003D84E2 /* ViewController.m in Sources */,
+				631F850E26E3AF26007B87BC /* NSString+Extras.m in Sources */,
 				6306C41826E2A3BC003D84E2 /* main.m in Sources */,
+				631F851226E3AFC1007B87BC /* NSURLRequest+Extras.m in Sources */,
+				631F850026E3ABE0007B87BC /* NSHTTPURLResponse+Extras.m in Sources */,
 				6306C40D26E2A3BB003D84E2 /* AppDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -274,12 +310,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "PostMa'am/PostMa_am.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "PostMa'am/Etc/PostMa_am.entitlements";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = H8KMXW4VV4;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = "PostMa'am/Info.plist";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/PostMa'am/Etc/PrefixHeader.pch";
+				INFOPLIST_FILE = "PostMa'am/Etc/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -295,12 +334,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = "PostMa'am/PostMa_am.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "PostMa'am/Etc/PostMa_am.entitlements";
+				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = H8KMXW4VV4;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = "PostMa'am/Info.plist";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SRCROOT)/PostMa'am/Etc/PrefixHeader.pch";
+				INFOPLIST_FILE = "PostMa'am/Etc/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

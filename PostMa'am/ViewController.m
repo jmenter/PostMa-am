@@ -1,6 +1,6 @@
 
-@import WebKit;
 #import "ViewController.h"
+@import WebKit;
 
 @interface ViewController ()<NSTextFieldDelegate, NSTableViewDataSource, NSTableViewDelegate>
 
@@ -13,7 +13,6 @@
 @property (weak) IBOutlet NSTableView *requestHeadersTableView;
 
 #pragma mark - Response
-
 @property (nonatomic) NSHTTPURLResponse *response;
 @property (weak) IBOutlet NSTextField *responseLabel;
 @property (weak) IBOutlet NSTableView *responseHeadersTableView;
@@ -24,39 +23,23 @@
 
 @implementation ViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    self.requestHeaders = NSMutableDictionary.new;
-    [self.methodPopUp removeAllItems];
-    [self.methodPopUp addItemsWithTitles:@[@"GET", @"HEAD", @"PUT", @"PATCH", @"DELETE", @"POST", @"OPTIONS", @"TRACE", @"CONNECT"]];
-    self.goButton.enabled = NO;
-}
-
-- (IBAction)goButtonAction:(NSButton *)sender;
-{
-    [self performRequest];
-}
-
-- (IBAction)addressFieldAction:(NSTextField *)sender;
-{
-    [self performRequest];
-}
-
 - (void)performRequest;
 {
     NSString *urlString = self.addressTextField.stringValue;
-    if (!([urlString hasPrefix:@"http://"] || [urlString hasPrefix:@"https://"])) {
+    if (!urlString.hasHTTPPrefix) {
         urlString = [@"https://" stringByAppendingString:urlString];
         self.addressTextField.stringValue = urlString;
     }
 
-    NSURL *url = [NSURL URLWithString:urlString];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    request.HTTPMethod = self.methodPopUp.titleOfSelectedItem;
-    request.allHTTPHeaderFields = self.requestHeaders;
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]
+                                              httpMethod:self.methodPopUp.titleOfSelectedItem
+                                                 headers:self.requestHeaders];
 
-    [[NSURLSession.sharedSession dataTaskWithRequest:request completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        dispatch_async(dispatch_get_main_queue(), ^{ error ? [self handleError:error] : [self handleResponse:(NSHTTPURLResponse *)response data:data]; });
+    [[NSURLSession.sharedSession dataTaskWithRequest:request
+                                   completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            error ? [self handleError:error] : [self handleResponse:(NSHTTPURLResponse *)response data:data];
+        });
     }] resume];
 }
 
@@ -68,17 +51,33 @@
 - (void)handleResponse:(NSHTTPURLResponse *)response data:(NSData *)data;
 {
     self.response = response;
-    NSString *responseEncoding = self.response.textEncodingName ?: @"utf8";
-    NSStringEncoding encoding = CFStringConvertEncodingToNSStringEncoding(CFStringConvertIANACharSetNameToEncoding((CFStringRef)responseEncoding));
-    self.responseRawTextField.stringValue = [NSString.alloc initWithData:data encoding:encoding];
-    [self.responseWebView loadHTMLString:self.responseRawTextField.stringValue baseURL:response.URL.baseURL];
+    self.responseRawTextField.stringValue = [NSString.alloc initWithData:data encoding:self.response.stringEncoding];
+    [self.responseWebView loadHTMLString:self.responseRawTextField.stringValue baseURL:self.response.URL.baseURL];
     [self.responseHeadersTableView reloadData];
 }
 
-- (void)controlTextDidChange:(NSNotification *)obj;
-{
-    self.goButton.enabled = self.addressTextField.stringValue.length > 0;
+#pragma mark - NSViewController Life Cycle
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.requestHeaders = NSMutableDictionary.new;
+    self.requestHeaders[@"edit"] = @"edit";
+    self.goButton.enabled = NO;
 }
+
+#pragma mark - IBActions
+
+- (IBAction)goButtonAction:(NSButton *)sender;
+{
+    [self performRequest];
+}
+
+- (IBAction)addressFieldAction:(NSTextField *)sender;
+{
+    [self performRequest];
+}
+
+#pragma mark - NSTableViewDataSource
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView;
 {
@@ -107,6 +106,20 @@
         }
     }
     return view;
+}
+
+#pragma mark - NSTableViewDelegate
+
+- (void)tableView:(NSTableView *)tableView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row;
+{
+    NSLog(@"setting %@ for %@ at %li", [object description], tableColumn.identifier, row);
+}
+
+#pragma mark - NSTextFieldDelegate
+
+- (void)controlTextDidChange:(NSNotification *)obj;
+{
+    self.goButton.enabled = self.addressTextField.stringValue.length > 0;
 }
 
 @end
