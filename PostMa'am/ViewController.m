@@ -2,25 +2,28 @@
 #import "ViewController.h"
 @import WebKit;
 
-@interface ViewController ()<NSTextFieldDelegate, NSTableViewDataSource, NSTableViewDelegate>
+@interface ViewController ()<NSTextFieldDelegate, NSTableViewDataSource, NSTableViewDelegate, NSSplitViewDelegate>
+@property (weak) IBOutlet NSSplitView *requestSplitView;
 
 #pragma mark - Request
 @property (weak) IBOutlet NSTextField *requestLabel;
 @property (weak) IBOutlet NSPopUpButton *methodPopUp;
 @property (weak) IBOutlet NSTextField *addressTextField;
 @property (weak) IBOutlet NSButton *goButton;
-@property (nonatomic) NSMutableDictionary <NSString *, NSString *> *requestHeaders;
+@property (nonatomic) NSMutableArray *requestHeaderKeys;
+@property (nonatomic) NSMutableArray *requestHeaderValues;
 @property (weak) IBOutlet NSTextField *bodyTextField;
 @property (weak) IBOutlet NSButton *includeBodyCheckbox;
 @property (weak) IBOutlet NSPopUpButton *bodyEncodingPopUp;
 @property (weak) IBOutlet NSTableView *requestHeadersTableView;
+@property (weak) IBOutlet NSSplitView *responseSplitView;
 
 #pragma mark - Response
 @property (weak) IBOutlet NSTextField *responseLabel;
 @property (weak) IBOutlet NSTextField *responseStatusLabel;
 @property (weak) IBOutlet NSTableView *responseHeadersTableView;
-@property (weak) IBOutlet NSTextField *responseRawTextField;
 @property (weak) IBOutlet WKWebView *responseWebView;
+@property (weak) IBOutlet NSTextView *responseRawTextView;
 
 // Keep the response and data for display purposes.
 @property (nonatomic) NSHTTPURLResponse *response;
@@ -29,6 +32,38 @@
 @end
 
 @implementation ViewController
+
+#pragma mark - NSSplitViewDelegate
+
+- (void)splitViewDidResizeSubviews:(NSNotification *)notification;
+{
+    if (![notification.userInfo[@"NSSplitViewUserResizeKey"] boolValue]) { return; }
+
+    NSSplitView *activeSplitView = notification.object;
+    CGFloat position = activeSplitView.subviews.firstObject.frame.size.height;
+    if (activeSplitView == self.requestSplitView) {
+        [self.responseSplitView setPosition:position ofDividerAtIndex:0];
+    } else {
+        [self.requestSplitView setPosition:position ofDividerAtIndex:0];
+
+    }
+}
+- (IBAction)tableViewDoubleAction:(NSTableView *)sender;
+{
+    [self.requestHeaderKeys addObject:@"Header"];
+    [self.requestHeaderValues addObject:@"Value"];
+    [self.requestHeadersTableView reloadData];
+}
+
+- (NSDictionary *)requestHeaders;
+{
+    NSMutableDictionary *headers = NSMutableDictionary.new;
+    for (NSString *key in self.requestHeaderKeys) {
+        NSInteger index = [self.requestHeaderKeys indexOfObject:key];
+        headers[key] = self.requestHeaderValues[index] ?: @"";
+    }
+    return headers.copy;
+}
 
 - (void)performRequest;
 {
@@ -68,8 +103,11 @@
     self.response = response;
     self.responseData = data;
     self.responseStatusLabel.stringValue = [NSString stringWithFormat:@"Status: %li", self.response.statusCode];
-    self.responseRawTextField.stringValue = [self.responseData stringWithEncoding:self.response.stringEncoding];
-    [self.responseWebView loadHTMLString:self.responseRawTextField.stringValue
+    NSString *responseString = [self.responseData stringWithEncoding:self.response.stringEncoding];
+//    id responseObject = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+//    NSString *pretty = [[NSJSONSerialization dataWithJSONObject:responseObject options:NSJSONWritingPrettyPrinted error:nil] stringWithEncoding:NSUTF8StringEncoding];
+    self.responseRawTextView.string = responseString;
+    [self.responseWebView loadHTMLString:responseString
                                  baseURL:self.response.URL.baseURL];
     [self.responseHeadersTableView reloadData];
 }
@@ -78,8 +116,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.requestHeaders = NSMutableDictionary.new;
-    self.requestHeaders[@"edit"] = @"edit";
+    self.requestHeaderKeys = NSMutableArray.new;
+    [self.requestHeaderKeys addObject:@"key"];
+    self.requestHeaderValues = NSMutableArray.new;
+    [self.requestHeaderValues addObject:@"value"];
     self.goButton.enabled = NO;
 }
 
@@ -99,6 +139,17 @@
 - (IBAction)addressFieldAction:(NSTextField *)sender;
 {
     [self performRequest];
+}
+
+- (IBAction)requestHeadersTextFieldEdit:(NSComboBox *)sender;
+{
+    NSInteger row = [self.requestHeadersTableView rowForView:sender];
+    if ([self.requestHeadersTableView columnForView:sender] == 0) {
+        self.requestHeaderKeys[row] = sender.stringValue;
+    } else {
+        self.requestHeaderValues[row] = sender.stringValue;
+    }
+    [self.requestHeadersTableView reloadData];
 }
 
 #pragma mark - NSTableViewDataSource
@@ -129,11 +180,6 @@
 }
 
 #pragma mark - NSTableViewDelegate
-
-- (void)tableView:(NSTableView *)tableView setObjectValue:(id)object forTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row;
-{
-    NSLog(@"setting %@ for %@ at %li", [object description], tableColumn.identifier, row);
-}
 
 #pragma mark - NSTextFieldDelegate
 

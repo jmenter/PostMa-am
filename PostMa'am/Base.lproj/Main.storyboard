@@ -813,18 +813,26 @@
                                                                                             <rect key="frame" x="1" y="1" width="207" height="17"/>
                                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                             <subviews>
-                                                                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7Gh-z5-72e">
-                                                                                                    <rect key="frame" x="0.0" y="1" width="207" height="16"/>
-                                                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
-                                                                                                    <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" title="Table View Cell" id="3ZJ-Dn-evG">
-                                                                                                        <font key="font" usesAppearanceFont="YES"/>
+                                                                                                <comboBox verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xrG-Vd-6st">
+                                                                                                    <rect key="frame" x="0.0" y="-4" width="210" height="25"/>
+                                                                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                                                                                    <comboBoxCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" numberOfVisibleItems="5" id="grC-Nl-HZt">
+                                                                                                        <font key="font" metaFont="system"/>
                                                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                                                    </textFieldCell>
-                                                                                                </textField>
+                                                                                                        <objectValues>
+                                                                                                            <string>Item 1</string>
+                                                                                                            <string>Item 2</string>
+                                                                                                            <string>Item 3</string>
+                                                                                                        </objectValues>
+                                                                                                    </comboBoxCell>
+                                                                                                    <connections>
+                                                                                                        <action selector="requestHeadersTextFieldEdit:" target="XfG-lQ-9wD" id="zES-uM-b47"/>
+                                                                                                    </connections>
+                                                                                                </comboBox>
                                                                                             </subviews>
                                                                                             <connections>
-                                                                                                <outlet property="textField" destination="7Gh-z5-72e" id="24D-FJ-btV"/>
+                                                                                                <outlet property="textField" destination="xrG-Vd-6st" id="Acx-5E-Fb6"/>
                                                                                             </connections>
                                                                                         </tableCellView>
                                                                                     </prototypeCellViews>
@@ -853,6 +861,9 @@
                                                                                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                                                     </textFieldCell>
+                                                                                                    <connections>
+                                                                                                        <action selector="requestHeadersTextFieldEdit:" target="XfG-lQ-9wD" id="S8M-RA-eJc"/>
+                                                                                                    </connections>
                                                                                                 </textField>
                                                                                             </subviews>
                                                                                             <connections>
@@ -863,6 +874,7 @@
                                                                                 </tableColumn>
                                                                             </tableColumns>
                                                                             <connections>
+                                                                                <action trigger="doubleAction" selector="tableViewDoubleAction:" target="XfG-lQ-9wD" id="L9U-ff-hmC"/>
                                                                                 <outlet property="dataSource" destination="XfG-lQ-9wD" id="RXK-t4-PuM"/>
                                                                                 <outlet property="delegate" destination="XfG-lQ-9wD" id="k4o-O3-lIN"/>
                                                                             </connections>
@@ -928,6 +940,9 @@
                                                     <real value="250"/>
                                                     <real value="250"/>
                                                 </holdingPriorities>
+                                                <connections>
+                                                    <outlet property="delegate" destination="XfG-lQ-9wD" id="iOb-eO-7Zk"/>
+                                                </connections>
                                             </splitView>
                                         </subviews>
                                     </customView>
@@ -966,7 +981,7 @@
                                                                             <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                             <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                                                             <tableColumns>
-                                                                                <tableColumn identifier="responseHeader" width="325" minWidth="40" maxWidth="1000" id="vkc-Mc-rTy">
+                                                                                <tableColumn identifier="responseHeader" editable="NO" width="325" minWidth="40" maxWidth="1000" id="vkc-Mc-rTy">
                                                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Response Header">
                                                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -998,7 +1013,7 @@
                                                                                         </tableCellView>
                                                                                     </prototypeCellViews>
                                                                                 </tableColumn>
-                                                                                <tableColumn identifier="responseValue" width="77" minWidth="40" maxWidth="1000" id="yXe-l5-YdH">
+                                                                                <tableColumn identifier="responseValue" editable="NO" width="77" minWidth="40" maxWidth="1000" id="yXe-l5-YdH">
                                                                                     <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Value">
                                                                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                                                         <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -1076,15 +1091,42 @@
                                                                             <rect key="frame" x="10" y="33" width="404" height="364"/>
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <subviews>
-                                                                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EEf-ir-NoF">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="407" height="381"/>
+                                                                                <scrollView fixedFrame="YES" borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c17-oa-5qE">
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="407" height="364"/>
                                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                                                    <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" title="This is a test" drawsBackground="YES" id="coT-xK-L1n">
-                                                                                        <font key="font" size="13" name="AndaleMono"/>
-                                                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                                    </textFieldCell>
-                                                                                </textField>
+                                                                                    <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="eQ9-as-e06">
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="392" height="364"/>
+                                                                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                                        <subviews>
+                                                                                            <textView editable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" smartInsertDelete="YES" id="QpV-b1-wv6">
+                                                                                                <rect key="frame" x="0.0" y="0.0" width="392" height="364"/>
+                                                                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                                                <size key="minSize" width="392" height="364"/>
+                                                                                                <size key="maxSize" width="407" height="10000000"/>
+                                                                                                <attributedString key="textStorage">
+                                                                                                    <fragment content="test">
+                                                                                                        <attributes>
+                                                                                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                                                            <font key="NSFont" size="13" name="AndaleMono"/>
+                                                                                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                                                                        </attributes>
+                                                                                                    </fragment>
+                                                                                                </attributedString>
+                                                                                                <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                                                            </textView>
+                                                                                        </subviews>
+                                                                                    </clipView>
+                                                                                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="mY9-bj-VLG">
+                                                                                        <rect key="frame" x="-100" y="-100" width="225" height="15"/>
+                                                                                        <autoresizingMask key="autoresizingMask"/>
+                                                                                    </scroller>
+                                                                                    <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="pR1-Lh-dPE">
+                                                                                        <rect key="frame" x="392" y="0.0" width="15" height="364"/>
+                                                                                        <autoresizingMask key="autoresizingMask"/>
+                                                                                    </scroller>
+                                                                                </scrollView>
                                                                             </subviews>
                                                                         </view>
                                                                     </tabViewItem>
@@ -1094,7 +1136,7 @@
                                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                             <subviews>
                                                                                 <wkWebView wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QPv-0p-tWh">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="407" height="361"/>
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="407" height="364"/>
                                                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                                                     <wkWebViewConfiguration key="configuration">
                                                                                         <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -1113,6 +1155,9 @@
                                                     <real value="250"/>
                                                     <real value="250"/>
                                                 </holdingPriorities>
+                                                <connections>
+                                                    <outlet property="delegate" destination="XfG-lQ-9wD" id="w1f-QP-ldW"/>
+                                                </connections>
                                             </splitView>
                                         </subviews>
                                     </customView>
@@ -1133,9 +1178,11 @@
                         <outlet property="methodPopUp" destination="XxR-5g-dLH" id="IPT-md-kee"/>
                         <outlet property="requestHeadersTableView" destination="oQp-71-fxH" id="AUO-cx-ACW"/>
                         <outlet property="requestLabel" destination="Veo-9X-Wpy" id="vs6-ia-Jtj"/>
+                        <outlet property="requestSplitView" destination="oKn-sa-xKA" id="GLN-77-JWO"/>
                         <outlet property="responseHeadersTableView" destination="JqD-NK-oue" id="FPb-Hh-XQN"/>
                         <outlet property="responseLabel" destination="8FP-fM-6Tf" id="2JW-24-z4q"/>
-                        <outlet property="responseRawTextField" destination="EEf-ir-NoF" id="tw2-8p-7I6"/>
+                        <outlet property="responseRawTextView" destination="QpV-b1-wv6" id="oZZ-3b-Kgm"/>
+                        <outlet property="responseSplitView" destination="Ldh-9d-q43" id="QWU-bk-Cq5"/>
                         <outlet property="responseStatusLabel" destination="tDg-1Z-aiN" id="o25-cX-QsA"/>
                         <outlet property="responseWebView" destination="QPv-0p-tWh" id="ZcD-5m-8pv"/>
                     </connections>
