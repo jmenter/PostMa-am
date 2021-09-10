@@ -2,7 +2,7 @@
 #import "ViewController.h"
 @import WebKit;
 
-@interface ViewController ()<NSTextFieldDelegate, NSTableViewDataSource, NSTableViewDelegate, NSSplitViewDelegate>
+@interface ViewController ()<NSTextFieldDelegate, NSTableViewDataSource, NSTableViewDelegate, NSSplitViewDelegate, NSComboBoxDataSource>
 @property (weak) IBOutlet NSSplitView *requestSplitView;
 
 #pragma mark - Request
@@ -29,9 +29,39 @@
 @property (nonatomic) NSHTTPURLResponse *response;
 @property (nonatomic) NSData *responseData;
 
+@property (nonatomic) NSDictionary <NSString *, NSArray <NSString *> *> *headerHints;
 @end
 
 @implementation ViewController
+
+#pragma mark - NSComboBoxDataSource
+
+- (NSInteger)numberOfItemsInComboBox:(NSComboBox *)comboBox;
+{
+    NSInteger row = [self.requestHeadersTableView rowForView:comboBox];
+    if (row < 0) { return 0; }
+    if ([self.requestHeadersTableView columnForView:comboBox] == 0) {
+        return self.headerHints.count;
+    } else {
+        // find what is selected in
+        NSString *key = self.requestHeaderKeys[row];
+        return self.headerHints[key].count;
+    }
+
+    return 0;
+}
+
+- (id)comboBox:(NSComboBox *)comboBox objectValueForItemAtIndex:(NSInteger)index;
+{
+    NSInteger row = [self.requestHeadersTableView rowForView:comboBox];
+    if (row < 0) { return nil; }
+    if ([self.requestHeadersTableView columnForView:comboBox] == 0) {
+        return self.headerHints.allKeys[index];
+    } else {
+        NSString *key = self.requestHeaderKeys[row];
+        return self.headerHints[key][index];
+    }
+}
 
 #pragma mark - NSSplitViewDelegate
 
@@ -95,7 +125,9 @@
     self.response = nil;
     self.responseData = nil;
     self.responseStatusLabel.stringValue = [NSString stringWithFormat:@"Status: Error (%li, %@)", error.code, error.localizedDescription];
-    // TODO: handle error
+    self.responseRawTextView.string = @"";
+    [self.responseHeadersTableView reloadData];
+// TODO: handle error
 }
 
 - (void)handleResponse:(NSHTTPURLResponse *)response data:(NSData *)data;
@@ -116,6 +148,17 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.headerHints = @{@"Accept" : @[@"text/html", @"text/plain"],
+                         @"Transfer-Encoding" : @[@"aes128gcm",
+                                                  @"br",
+                                                  @"compress",
+                                                  @"deflate",
+                                                  @"gzip",
+                                                  @"identity",
+                                                  @"pack200-gzip",
+                                                  @" x-compress",
+                                                  @"x-gzip",
+                                                  @"zstd"]};
     self.requestHeaderKeys = NSMutableArray.new;
     [self.requestHeaderKeys addObject:@"key"];
     self.requestHeaderValues = NSMutableArray.new;
@@ -144,6 +187,7 @@
 - (IBAction)requestHeadersTextFieldEdit:(NSComboBox *)sender;
 {
     NSInteger row = [self.requestHeadersTableView rowForView:sender];
+    if (row < 0) { return; }
     if ([self.requestHeadersTableView columnForView:sender] == 0) {
         self.requestHeaderKeys[row] = sender.stringValue;
     } else {
